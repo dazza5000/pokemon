@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/pokemon_list_fragment_destination">
+
+    <fragment
+        android:id="@+id/pokemon_list_fragment_destination"
+        android:name="com.whereisdarran.well.feature.list.ui.PokemonListFragment"
+        android:label="@string/app_name"
+        >
+        <action
+            android:id="@+id/showPokemon"
+            app:destination="@id/pokemon_detail_fragment_destination" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pokemon_detail_fragment_destination"
+        android:name="com.whereisdarran.well.feature.detail.ui.PokemonDetailFragment"
+        >
+
+        <argument
+            android:name="pokemon"
+            app:argType="com.whereisdarran.well.model.Pokemon" />
+    </fragment>
+</navigation>
