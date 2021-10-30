@@ -9,9 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import com.whereisdarran.well.data.Result
 import com.whereisdarran.well.databinding.PokemonListFragmentBinding
 import com.whereisdarran.well.feature.list.viewmodel.PokemonListViewModel
-import com.whereisdarran.well.feature.list.viewmodel.PokemonStateFlow
 import kotlinx.coroutines.flow.collect
 
 
@@ -21,7 +21,7 @@ class PokemonListFragment : Fragment() {
     private val pokemonListViewModel: PokemonListViewModel by viewModels()
     private val pokemonListAdapter = PokemonListAdapter { pokemon ->
         findNavController().navigate(
-            PokemonListFragmentDirections.showPokemon(pokemon),
+            PokemonListFragmentDirections.showPokemon(pokemon.id),
             navOptions {
                 anim {
                     enter = android.R.animator.fade_in
@@ -45,10 +45,10 @@ class PokemonListFragment : Fragment() {
         pokemonListFragmentBinding.pokemonRecyclerview.adapter = pokemonListAdapter
 
         lifecycleScope.launchWhenStarted {
-            pokemonListViewModel.pokemon.collect {
+            pokemonListViewModel.pokemons.collect {
                 when (it) {
-                    is PokemonStateFlow.Success -> {
-                        pokemonListAdapter.submitList(it.pokemonList)
+                    is Result.Success -> {
+                        pokemonListAdapter.submitList(it.data)
                     }
                     else -> {
                         // Would show error/reload action
